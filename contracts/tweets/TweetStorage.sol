@@ -1,6 +1,6 @@
 pragma solidity ^0.8.2;
 
-import '../helpers/BaseStorage';
+import '../helpers/BaseStorage.sol';
 
 contract TweetStorage is BaseStorage {
   mapping(uint => Tweet) public tweets;
