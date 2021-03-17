@@ -1,5 +1,6 @@
 const utils = require('../utils')
 const { assertVMException } = utils;
+const UserController = artifacts.require('UserController');
 const UserStorage = artifacts.require('UserStorage');
 
 contract('users', () => {
@@ -15,10 +16,10 @@ contract('users', () => {
     }
   })
 
-  it('can create user', async () => {
-    const storage = await UserStorage.deployed();
+  it('can create user with controller', async () => {
+    const controller = await UserController.deployed();
     const username = web3.utils.fromAscii('adam');
-    const tx = await storage.createUser(username);
+    const tx = await controller.createUser(username);
     assert.isOk(tx);
   })
 
