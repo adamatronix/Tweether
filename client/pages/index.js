@@ -1,27 +1,28 @@
 import React from 'react'
-import { eth, getInstance } from '../web3/provider';
-import UserStorage from "../web3/artifacts/UserStorage.json";
+import { getUserInfo, createUser } from '../web3/users'
 
 export default class IndexPage extends React.Component {
 
-  async componentDidMount() {
-    try {
-      await ethereum.enable()
-      const addresses = await eth.getAccounts()
-      const balance = await eth.getBalance(addresses[0]);
-    } catch (err) {
-      console.error("User denied access to their ETH addresses!")
-    }
+  logUser = async () => {
+    const userInfo = await getUserInfo(1);
+    console.log(userInfo);
+  }
 
-    const storage = await getInstance(UserStorage)
-    const { username } = await storage.profiles.call(1)
-    console.log("Got username:", username);
-
+  createUser = async () => {
+    const tx = await createUser("adam")
+    console.log(tx);
   }
 
   render() {
     return (
-      <h1>hello world!</h1>
+      <div>
+          <button onClick={this.logUser}>
+            Get user with ID 1
+          </button>
+          <button onClick={this.createUser}>
+            Create user
+          </button>
+      </div>
     )
   }
 }
