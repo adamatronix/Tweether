@@ -1,24 +1,45 @@
 import React from 'react'
-import { eth } from '../web3/provider';
+import { getUserInfo, createUser } from '../web3/users'
+import { getTweetInfo, createTweet } from '../web3/tweets'
 
 export default class IndexPage extends React.Component {
 
-  async componentDidMount() {
-    try {
-      await ethereum.enable()
-      const addresses = await eth.getAccounts()
-      console.log(addresses);
+  logUser = async () => {
+    const userInfo = await getUserInfo(1);
+    console.log(userInfo);
+  }
 
-      const balance = await eth.getBalance(addresses[0]);
-      console.log(balance);
-    } catch (err) {
-      console.error("User denied access to their ETH addresses!")
-    }
+  createUser = async () => {
+    const tx = await createUser("adam")
+    console.log(tx);
+  }
+
+  logTweet = async () => {
+    const tweetInfo = await getTweetInfo(1)
+    console.log(tweetInfo)
+  }
+
+  createTweet = async () => {
+    const tx = await createTweet("Hello world!")
+    console.log(tx)
   }
 
   render() {
     return (
-      <h1>hello world!</h1>
+      <div>
+          <button onClick={this.logUser}>
+            Get user with ID 1
+          </button>
+          <button onClick={this.createUser}>
+            Create user
+          </button>
+          <button onClick={this.logTweet}>
+            Get tweet with ID 1
+          </button>
+          <button onClick={this.createTweet}>
+            Create tweet
+          </button>
+      </div>
     )
   }
 }
