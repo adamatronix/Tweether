@@ -9,7 +9,7 @@ contract('users', () => {
 
     try {
       const username = web3.utils.fromAscii('adam');
-      await storage.createUser(username);
+      await storage.createUser(0x0,username,"Adam","Gee","I'm dumb","adam@adamatronix.com");
       assert.fail();
     } catch(err) {
       assertVMException(err);
@@ -19,7 +19,9 @@ contract('users', () => {
   it('can create user with controller', async () => {
     const controller = await UserController.deployed();
     const username = web3.utils.fromAscii('adam');
-    const tx = await controller.createUser(username);
+    const first = web3.utils.fromAscii('Adam');
+    const last = web3.utils.fromAscii('Gee');
+    const tx = await controller.createUser(username,first,last,"I'm dumb","adam@adamatronix.com");
     assert.isOk(tx);
   })
 

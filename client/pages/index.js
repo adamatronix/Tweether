@@ -1,8 +1,15 @@
 import React from 'react'
-import { getUserInfo, createUser } from '../web3/users'
+import Web3Utils from 'web3-utils';
+import { getUserInfo, createUser, getLoggedInUserId } from '../web3/users'
 import { getTweetInfo, createTweet } from '../web3/tweets'
 
 export default class IndexPage extends React.Component {
+
+  async componentDidMount() {
+    const userId = await getLoggedInUserId()
+
+    console.log("Logged in as", userId);
+  }
 
   logUser = async () => {
     const userInfo = await getUserInfo(1);
@@ -10,7 +17,7 @@ export default class IndexPage extends React.Component {
   }
 
   createUser = async () => {
-    const tx = await createUser("adam")
+    const tx = await createUser(Web3Utils.fromAscii("adam"), Web3Utils.fromAscii("Adam"), Web3Utils.fromAscii("Gee"), "I'm dumb", 'adam@adamatronix.com')
     console.log(tx);
   }
 

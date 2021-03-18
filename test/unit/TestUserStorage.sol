@@ -15,6 +15,6 @@ contract TestUserStorage {
     // Get the deployed contract
     uint _expectedId = 1;
 
-    Assert.equal(userStorage.createUser("adam"), _expectedId, "Should create user with ID 1");
+    Assert.equal(userStorage.createUser(address(0),"adam","Adam","Gee","I'm dumb","adam@adamatronix.com"), _expectedId, "Should create user with ID 1");
   }
 }
