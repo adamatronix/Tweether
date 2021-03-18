@@ -13,7 +13,7 @@ export const getUserInfo = async (userId) => {
   }
 }
 
-export const createUser = async (username) => {
+export const createUser = async (...params) => {
   const controller = await getInstance(UserController)
 
   try {
@@ -21,7 +21,7 @@ export const createUser = async (username) => {
     const addresses = await eth.getAccounts()
 
     const result = await controller.createUser(
-      Web3Utils.fromAscii(username),
+      ...params,
     {
       from: addresses[0],
     })
@@ -31,4 +31,20 @@ export const createUser = async (username) => {
     console.error("Err:", err)
   }
 
+}
+
+export const getLoggedInUserId = async () => {
+  try {
+    await ethereum.enable()
+    const addresses = await eth.getAccounts()
+
+    if(!addresses) return
+
+    const storage = await getInstance(UserStorage)
+    const userId = await storage.addresses.call(addresses[0])
+
+    return parseInt(userId)
+  } catch (err) {
+
+  }
 }
